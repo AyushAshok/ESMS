@@ -24,6 +24,14 @@ async def get_employee_by_id(db:AsyncSession, employee_id:int):
     except SQLAlchemyError as e:
         raise e
 
+
+async def get_all_employees(db:AsyncSession):
+    try:
+        result = await db.execute(select(Employees))
+        return result.scalars().all()
+    except SQLAlchemyError as e:
+        raise e
+
 async def update_employee(db:AsyncSession, employee_id:int, name:str | None=None, email:str | None=None, team_id:int | None=None, manager_id:int | None=None, designation_level:Designation | None=None):
     employee = await get_employee_by_id(db, employee_id)
     if not employee:

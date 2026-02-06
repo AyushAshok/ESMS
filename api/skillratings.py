@@ -1,19 +1,29 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
 from sqlalchemy import select
 
 from ESMS.core.dependencies import get_current_user, get_db
 from ESMS.db.models.employees import Employees
 from ESMS.schemas.skillratings import SkillRating, SkillRatingCreate, SkillRatingUpdate
-from ESMS.services.skillrating_service import create_skill_rating, get_skill_rating_by_id, update_skill_rating, delete_skill_rating
+from ESMS.services.skillrating_service import create_skill_rating, get_skill_rating_by_id, update_skill_rating, delete_skill_rating, get_all_skill_ratings
 
 router=APIRouter(prefix="/skill-ratings",tags=["SkillRatings"])
+
+
+@router.get("/", response_model=List[SkillRating], summary="List skill ratings")
+async def list_skill_ratings(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+    if not current_user.is_manager:
+        raise HTTPException(status_code=403, detail="Managers only")
+    return await get_all_skill_ratings(db)
+
 
 @router.post("/", response_model=SkillRating,status_code=status.HTTP_201_CREATED,summary="Create a new skill rating")
 async def create_skill_rating_endpoint(skill_rating: SkillRatingCreate, db: AsyncSession = Depends(get_db),current_user = Depends(get_current_user)):
     if not (current_user.employee_id == skill_rating.emp_id or current_user.is_manager):
         raise HTTPException(status_code=403, detail='Not authorized')
     return await create_skill_rating(db=db, employee_id=skill_rating.emp_id, skill_id=skill_rating.skill_id, last_rated_by=current_user.employee_id, manager_rating=skill_rating.manager_rating, self_rating=skill_rating.self_rating, comments=skill_rating.comments)   
+
 
 @router.get("/{skill_rating_id}", response_model=SkillRating,summary="Get skill rating details by ID")
 async def get_skill_rating_endpoint(skill_rating_id: int, db: AsyncSession = Depends(get_db)):

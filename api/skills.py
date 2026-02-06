@@ -1,12 +1,20 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
 
 from ESMS.core.dependencies import get_current_user, get_db
 
 from ESMS.schemas.skills import Skill, SkillCreate, SkillUpdate
-from ESMS.services.skill_service import create_skill, get_skill_by_id, update_skill, delete_skill
+from ESMS.services.skill_service import create_skill, get_skill_by_id, update_skill, delete_skill, get_all_skills
 
 router=APIRouter(prefix="/skills",tags=["Skills"])
+
+
+@router.get("/", response_model=List[Skill], summary="List skills")
+async def list_skills(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+    if not current_user.is_manager:
+        raise HTTPException(status_code=403, detail="Managers only")
+    return await get_all_skills(db)
 
 @router.post("/", response_model=Skill,status_code=status.HTTP_201_CREATED,summary="Create a new skill")
 async def create_skill_endpoint(skill: SkillCreate, db: AsyncSession = Depends(get_db),current_user = Depends(get_current_user)):

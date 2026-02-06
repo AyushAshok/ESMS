@@ -27,3 +27,10 @@ class SkillRatings(SkillRatingsBase):
 
     class Config:
         orm_mode=True
+
+
+class SkillAssign(BaseModel):
+    skill_id: int
+    manager_rating: Ratings | None = None
+    self_rating: Ratings | None = None
+    comments: str | None = None

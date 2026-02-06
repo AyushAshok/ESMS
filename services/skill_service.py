@@ -4,6 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from ESMS.enums.skill_category import SkillCategory
 from ESMS.db.models.skills import Skills
+from sqlalchemy import select
 
 async def create_skill(db:AsyncSession, name:str, category:SkillCategory=SkillCategory.OTHER, description:str | None=None, is_organizationwide:bool=False):
     try:
@@ -55,4 +56,12 @@ async def delete_skill(db:AsyncSession,skill_id:int):
         return True
     except SQLAlchemyError as e:
         await db.rollback()
+        raise e
+
+
+async def get_all_skills(db:AsyncSession):
+    try:
+        result = await db.execute(select(Skills))
+        return result.scalars().all()
+    except SQLAlchemyError as e:
         raise e
