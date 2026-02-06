@@ -9,7 +9,7 @@ from ESMS.enums.ratings import Ratings
 class SkillRatings(Base):
     __tablename__="skillratings"
 
-    id=Column(Integer,primary_key=True,index=True)
+    id=Column(Integer,primary_key=True,index=True,unique=True)
     emp_id=Column(Integer,ForeignKey("employees.id",ondelete="CASCADE"),nullable=False,index=True)
     skill_id=Column(Integer,ForeignKey("skills.id",ondelete="CASCADE"),nullable=False,index=True)
     last_rated_by=Column(Integer,ForeignKey("employees.id",ondelete="CASCADE"),nullable=False,index=True)

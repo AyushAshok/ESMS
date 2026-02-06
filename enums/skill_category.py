@@ -1,10 +1,10 @@
 import enum
 
 class SkillCategory(enum.Enum):
-    PROGRAMMING = "programming"
-    CLOUD = "cloud"
-    DATA = "data"
-    DEVOPS = "devops"
-    DATABASE = "database"
-    SOFT_SKILL = "soft_skill"
-    OTHER = "other"
+    PROGRAMMING = "Programming"
+    CLOUD = "Cloud"
+    DATA = "Data"
+    DEVOPS = "DevOps"
+    DATABASE = "Database"
+    SOFT_SKILL = "Soft Skill"
+    OTHER = "Other"

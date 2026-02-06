@@ -9,7 +9,7 @@ from ESMS.enums.employee_designation import Designation
 class SkillExpectations(Base):
     __tablename__="skillexpectations"
 
-    id=Column(Integer,primary_key=True,index=True)
+    id=Column(Integer,primary_key=True,index=True,unique=True)
     description=Column(String)
     skill_id=Column(Integer,ForeignKey("skills.id",ondelete="CASCADE"),nullable=False)
     team_id=Column(Integer,ForeignKey("teams.id",ondelete="CASCADE"),nullable=False)
