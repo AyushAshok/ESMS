@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
 from ESMS.db.models.users import Users
-from ESMS.utils.security import get_password_hash, verify_password
+from ESMS.core.security import get_password_hash, verify_password
 
 
 async def create_user(db: AsyncSession, email: str, password: str, employee_id: int | None = None, is_manager: bool = False):
