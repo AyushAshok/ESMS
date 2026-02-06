@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean,Column, Enum,ForeignKey,Integer,String
+from sqlalchemy import Boolean,Column, Enum,ForeignKey,Integer,String,DateTime
 #from sqlalchemy.sql import func
 from ESMS.db.base import Base
 # from datetime import datetime
@@ -6,7 +6,7 @@ from ESMS.db.base import Base
 from ESMS.enums.ratings import Ratings
 from ESMS.enums.employee_designation import Designation
 
-class SkillExpectation(Base):
+class SkillExpectations(Base):
     __tablename__="skillexpectations"
 
     id=Column(Integer,primary_key=True,index=True)

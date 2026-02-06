@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean,Column,ForeignKey,Integer,String,Enum
+from sqlalchemy import Boolean,Column,ForeignKey,Integer,String,Enum,DateTime
 from sqlalchemy.sql import func
 from ESMS.db.base import Base
 from datetime import datetime
@@ -13,4 +13,4 @@ class Skills(Base):
     category=Column(Enum(SkillCategory),index=True,nullable=False)
     description=Column(String)
     is_organizationwide=Column(Boolean)
-    date_created=Column(datetime,server_default=func.now())
+    date_created=Column(DateTime,server_default=func.now())

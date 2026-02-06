@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean,Column,ForeignKey,Integer,String,Enum
+from sqlalchemy import Boolean,Column,ForeignKey,Integer,String,Enum,DateTime
 from sqlalchemy.sql import func
 from ESMS.db.base import Base
 from datetime import datetime
@@ -14,7 +14,7 @@ class SkillRatings(Base):
     skill_id=Column(Integer,ForeignKey("skills.id",ondelete="CASCADE"),nullable=False,index=True)
     last_rated_by=Column(Integer,ForeignKey("employees.id",ondelete="CASCADE"),nullable=False,index=True)
     manager_rating=Column(Enum(Ratings),nullable=False)
-    manager_rated_date=Column(datetime,server_default=func.now())
+    manager_rated_date=Column(DateTime,server_default=func.now())
     self_rating=Column(Enum(Ratings),nullable=False)
-    self_rated_date=Column(datetime,server_default=func.now())
+    self_rated_date=Column(DateTime,server_default=func.now())
     comments=Column(String)
