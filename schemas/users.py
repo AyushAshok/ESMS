@@ -14,7 +14,6 @@ class UserOut(BaseModel):
     email: EmailStr
     employee_id: Optional[int] = None
     is_manager: bool
-    is_active: bool
 
     class Config:
         orm_mode = True

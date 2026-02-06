@@ -53,7 +53,7 @@ async def delete_skill_expectation(db:AsyncSession, expectation_id:int):
         return None
     
     try:
-        await db.delete(expectation)
+        db.delete(expectation)
         await db.commit()
         return True
     except SQLAlchemyError as e:

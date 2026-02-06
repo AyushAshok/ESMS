@@ -53,7 +53,7 @@ async def delete_skill_rating(db:AsyncSession, rating_id:int):
     if not rating:
         return None
     try:
-        await db.delete(rating)
+        db.delete(rating)
         await db.commit()
         return True
     except SQLAlchemyError as e:

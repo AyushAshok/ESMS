@@ -46,7 +46,7 @@ async def delete_team_skill(db:AsyncSession,team_skill_id:int):
     if not team_skill:
         return None
     try:
-        await db.delete(team_skill)
+        db.delete(team_skill)
         await db.commit()
         return True
     except SQLAlchemyError as e:

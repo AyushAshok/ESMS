@@ -53,7 +53,7 @@ async def delete_employee(db:AsyncSession, employee_id:int):
         return None
     
     try:
-        await db.delete(employee)
+        db.delete(employee)
         await db.commit()
         return True
     except SQLAlchemyError as e:
